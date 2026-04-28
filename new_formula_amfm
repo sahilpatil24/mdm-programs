@@ -1,0 +1,116 @@
+/*************************************/
+import numpy as np
+import matplotlib.pyplot as plt
+
+Ac = float(input("Enter Carrier Amplitude: "))   #10
+Am = float(input("Enter Message Amplitude: "))   #5
+fc = float(input("Enter Carrier frequency: "))   #50
+fm = float(input("Enter Message frequency: "))   #2
+
+# Modulation Index calculation
+# B < 1: Under-modulation (Standard)
+# B = 1: Critical modulation
+# B > 1: Over-modulation (Envelope distortion)
+
+B = Am/Ac
+print(f"Modulation Index (B): {B:.2f}")
+
+# ---------------------------
+# Time Axis Setup
+# ---------------------------
+# Increase sampling rate based on the highest frequency for a smooth plot
+fs = 10 * fc  
+t = np.linspace(0, 1, int(fs))
+
+# ---------------------------
+# Signal Generation
+# ---------------------------
+
+# Carrier Signal: c(t) = Ac * cos(2 * pi * fc * t)
+carrier = Ac*np.cos(2*np.pi*fc*t)
+
+# Message Signal: m(t) = Am * cos(2 * pi * fm * t)
+message = Am*np.cos(2*np.pi*fm*t)
+
+# AM Modulated Signal: s(t) = [Ac + m(t)] * cos(2 * pi * fc * t)
+# This can also be written as: s(t) = Ac * (1 + B * cos(2 * pi * fm * t)) * cos(2 * pi * fc * t)
+AM_modulated = Ac * (1 + B*np.cos(2*np.pi*fm*t))*np.cos(2*np.pi*fc*t)
+
+
+plt.figure(figsize=(12,8))
+
+plt.subplot(3,1,1)
+plt.plot(t,carrier)
+plt.title("Carrier SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.subplot(3,1,2)
+plt.plot(t,message)
+plt.title("Message SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.subplot(3,1,3)
+plt.plot(t,AM_modulated)
+plt.title("AM modulated SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+
+
+/************************************************/
+fm
+import numpy as np
+import matplotlib.pyplot as plt
+
+Ac = float(input("Enter Carrier Amplitude: "))   #10
+Am = float(input("Enter Message Amplitude: "))   #5
+fc = float(input("Enter Carrier frequency: "))   #50
+fm = float(input("Enter Message frequency: "))   #2
+
+#β=Δf/fm   Δf=kf*Am
+kf = float(input("Enter Frequency Sensitivity (kf): "))  # usually taken 1000, 5 lena
+delta_f = kf * Am
+beta = delta_f / fm
+
+t = np.linspace(0,1,5000)
+
+carrier = Ac*np.cos(2*np.pi*fc*t)
+message = Am*np.cos(2*np.pi*fm*t)
+
+FM_Signal = Ac*np.cos(2*np.pi*fc*t + beta*np.sin(2*np.pi*fm*t))
+
+plt.figure(figsize=(12,8))
+
+plt.subplot(3,1,1)
+plt.plot(t,carrier)
+plt.title("Carrier SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.subplot(3,1,2)
+plt.plot(t,message)
+plt.title("Message SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.subplot(3,1,3)
+plt.plot(t,FM_Signal)
+plt.title("FM modulated SIgnal c(t)")
+plt.xlabel("Time(s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+
