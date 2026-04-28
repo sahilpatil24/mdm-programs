@@ -25,10 +25,10 @@ for bit in bits:
   t_bit = np.linspace(0,0.1,100)
 
   if bit == 1:
-    fsk_signal = np.sin(2 * np.pi * f0 * t_bit)
+    fsk_signal = np.sin(2 * np.pi * f1 * t_bit)
     psk_signal = np.sin(2 * np.pi * fc * t_bit + 0)
   else:
-    fsk_signal = np.sin(2 * np.pi * f1 * t_bit)
+    fsk_signal = np.sin(2 * np.pi * f0 * t_bit)
     psk_signal = np.sin(2 * np.pi * fc * t_bit + np.pi)
   fsk.extend(fsk_signal)
   psk.extend(psk_signal)
